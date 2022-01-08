@@ -22,7 +22,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-const port = 3001
+const port = 3000
 
 //import routes
 const userRoutes = require("./routes/user-routes")
