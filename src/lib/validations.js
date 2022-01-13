@@ -2,48 +2,40 @@ const Joi = require("joi")
 const Token = require("../models/token")
 const User = require("../models/user")
 const db = require("../db/connection")
-const errorMessages = require("../lib/errorMessages")
+const errorMessages = require("./messages")
 
 const validateNewUser = (user) => {
     const schema = Joi.object({
         email: Joi.string().email().required(),
-        password: Joi.string().required(),
+        password: Joi.string().min(3).required(),
     })
     return schema.validate(user);
 }
 
-const validateToken = async (token) => {
-    try {
-        //find token with give email and token
-        const doc = await Token.findOne({
-            token: token
-        })
-        if (!doc) return Error(errorMessages.InvalidToken)
-        const email = doc.email
-        //if found, change `is_verified` status to true
-        doc = await User.findOneAndUpdate(
-            { email: email },
-            { $set: { email_is_verified: true } },
-            { new: true },
-            (err, doc) => {
-                if (err) return Error(err)
-            }
-        )
-        if (!doc) return Error(errorMessages.MaliciousEmail)
+const validateToken = (token) => {
+    const schema = Joi.object({
+        token: Joi.string().min(8).max(8).required(),
+    })
+    return schema.validate(token);
+}
 
-        //delete token from db
-        const count = await Token.remove({
-            email: email,
-            token: token
-        })
-        if (count != 1) return Error(errorMessages.MaliciousToken)
-        return null
-    } catch (e) {
-        res.status(400).send(e)
-    }
+const validateEmail = (email) =>{
+    const schema = Joi.object({
+        email: Joi.string().email().required()
+    })
+    return schema.validate(email)
+}
+
+const validatePassword = (password) =>{
+    const schema = Joi.object({
+        password: Joi.string().min(3).required()
+    })
+    return schema.validate(password)
 }
 
 module.exports = {
     validateNewUser,
-    validateToken
+    validateToken,
+    validateEmail,
+    validatePassword,
 }

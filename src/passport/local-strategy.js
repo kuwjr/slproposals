@@ -1,5 +1,6 @@
 const passport = require('passport')
 const User = require("../models/user")
+const crypto = require("crypto");
 
 const LocalStrategy = require('passport-local').Strategy;
 
@@ -15,8 +16,11 @@ passport.use(new LocalStrategy(
             if (!user) {
                 return done(null, false, { message: 'Incorrect username.' });
             }
-            if (user.password != password) {
+            if (user.password != crypto.createHash("sha256").update(password).digest("hex")) {
                 return done(null, false, { message: 'Incorrect password.' });
+            }
+            if (user.email_is_verified == false) {
+                return done(null, false, { message: 'User email not verified.' })
             }
             return done(null, user);
         });
