@@ -2,9 +2,7 @@ const express = require("express")
 const app = express()
 const passport = require('passport')
 const session = require("express-session")
-
-// const authUserLocal = require("./passport/local-strategy")
-
+require("./passport/local-strategy")
 const bodyParser = require("body-parser");
 app.use(express.static("public"));
 app.use(bodyParser.json());
@@ -26,9 +24,11 @@ const port = 3000
 
 //import routes
 const userRoutes = require("./routes/user-routes")
+const proposalRoutes = require("./routes/proposal-routes")
 
 //set routes
 app.use("/users", userRoutes)
+app.use("/proposals", proposalRoutes)
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
