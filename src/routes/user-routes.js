@@ -13,7 +13,7 @@ const passport = require("passport");
 const sendMail = require("../lib/sendMail");
 const db = require("../db/connection");
 const Token = require("../models/token");
-const Fp_Token = require("../models/fp_token")
+const Fp_Token = require("../models/fp_token");
 const messages = require("../lib/messages");
 require("../passport/local-strategy");
 
@@ -89,6 +89,9 @@ router.get("/verify/:token", async (req, res) => {
       { email: deletedToken.email },
       { email_is_verified: true }
     );
+    if (changedToTrue == null)
+      return res.status(500).send(messages.InternalServerError);
+
     return res.status(200).send(messages.EmailVerificationSuccess);
   } catch (e) {
     return res.status(400).send(e);
@@ -121,7 +124,7 @@ router.post("/resend-email-verification", async (req, res) => {
 
     //resend email with new token
     sendMail(
-        updatedToken.email,
+      updatedToken.email,
       "Resent verification token",
       `Your token: ${tkn}`
     );
@@ -175,18 +178,18 @@ router.post("/forgot-password", async (req, res) => {
 
     //send email with fp_token
     sendMail(
-        user.email,
-        "Link to reset your password",
-        `Your token: ${fp_tkn}`
+      user.email,
+      "Link to reset your password",
+      `Your token: ${fp_tkn}`
     );
 
     //check for pending fp_token
     const updatedToken = await Fp_Token.findOneAndUpdate(
-        { email: req.body.email },
-        { token: fp_tkn }
-      );
-      if (updatedToken != null)
-        return res.status(200).send(messages.PasswordResetEmailReSent);
+      { email: req.body.email },
+      { token: fp_tkn }
+    );
+    if (updatedToken != null)
+      return res.status(200).send(messages.PasswordResetEmailReSent);
 
     //if new email, add token to `fp_tokens` collection with email
     await Fp_Token.create({
@@ -202,46 +205,53 @@ router.post("/forgot-password", async (req, res) => {
 
 //verify fp_token endpoint
 router.post("/reset-password/:token", async (req, res) => {
-    try {
-      //check if user is already logged in
-      if (req.isAuthenticated())
-        return res.status(403).send(messages.PermissionDenied);
-  
-      //validate token length
-      const v = validateToken({
-        token: req.params.token,
-      });
-      if (v.error) return res.status(403).send(messages.InvalidToken);
+  try {
+    //check if user is already logged in
+    if (req.isAuthenticated())
+      return res.status(403).send(messages.PermissionDenied);
 
-      //validate password
-      const v2 = validatePassword({
-        password: req.body.password,
-      });
-      if (v2.error) return res.status(403).send(messages.PasswordNotStrong);
+    //validate token length
+    const v = validateToken({
+      token: req.params.token,
+    });
+    if (v.error) return res.status(403).send(messages.InvalidToken);
 
-      //find token in db
-      const deletedToken = await Fp_Token.findOneAndDelete({
-        token: { $eq: req.params.token },
-      });
-      if (deletedToken == null)
-        return res.status(403).send(messages.InvalidToken);
-  
-      //if found, change `password` to new password
-      const passwordChanged = await User.findOneAndUpdate(
-        { email: deletedToken.email },
-        { password: crypto.createHash("sha256").update(req.body.password).digest("hex") }
-      );
+    //validate password
+    const v2 = validatePassword({
+      password: req.body.password,
+    });
+    if (v2.error) return res.status(403).send(messages.PasswordNotStrong);
+
+    //find token in db
+    const deletedToken = await Fp_Token.findOneAndDelete({
+      token: { $eq: req.params.token },
+    });
+    if (deletedToken == null)
+      return res.status(403).send(messages.InvalidToken);
+
+    //if found, change `password` to new password
+    const passwordChanged = await User.findOneAndUpdate(
+      { email: deletedToken.email },
+      {
+        password: crypto
+          .createHash("sha256")
+          .update(req.body.password)
+          .digest("hex"),
+      }
+    );
+    if (passwordChanged == null)
+      return res.status(500).send(messages.InternalServerError);
 
     //send an email to user informing about password change
     sendMail(
-        updatedToken.email,
+      passwordChanged.email,
       "Your password has been changed successfully",
       `This email is to inform about the password change.`
     );
-      return res.status(200).send(messages.PasswordResetSuccess);
-    } catch (e) {
-      return res.status(400).send(e);
-    }
-  });
+    return res.status(200).send(messages.PasswordResetSuccess);
+  } catch (e) {
+    return res.status(400).send(e);
+  }
+});
 
 module.exports = router;
