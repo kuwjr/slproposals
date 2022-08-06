@@ -1,0 +1,71 @@
+version: "3.0"
+services:
+  backend:
+    container_name: backend
+    build:
+      context: ./backend
+      dockerfile: dockerfile
+    ports:
+      - 5000:8000
+    networks:
+     - slproposals
+    volumes:
+      - ./backend:/backend
+    depends_on:
+      - mongodb
+    environment:
+      - WATCHPACK_POLLING=true
+      - CHOKIDAR_USEPOLLING=true
+
+  mongodb:
+    image: mongo
+    env_file:
+      - ./.env
+    container_name: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: casper
+      MONGO_INITDB_ROOT_PASSWORD: meow
+      MONGO_INITDB_DB: slproposals
+    ports:
+      - 27017:27017
+    networks:
+      - slproposals
+    volumes:
+      - './db_data:/data/db'
+      - './db_config:/data/configdb'
+      - './docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro'
+
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: dockerfile
+    ports:
+      - 3000:3000
+    networks:
+      - slproposals
+    volumes:
+      - ./frontend:/frontend
+    depends_on:
+      - backend
+    stdin_open: true
+    environment:
+      - WATCHPACK_POLLING=true
+      - CHOKIDAR_USEPOLLING=true
+
+networks:
+  slproposals:
+    driver: bridge
+
+volumes:
+  backend:
+    driver: local
+  mongodb:
+    driver: local
+  frontend:
+    driver: local
+  db_data:
+    driver: local
+  db_config:
+    driver: local
