@@ -2,10 +2,10 @@
   "name": "practice-node",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "dev": "nodemon src/index.js --unhandled-rejections=strict --trace-warnings ...",
-    "start": "nodemon src/index.js --unhandled-rejections=strict --trace-warnings ..."
+    "dev": "nodemon src/server.js --unhandled-rejections=strict --trace-warnings ...",
+    "start": "nodemon src/server.js --unhandled-rejections=strict --trace-warnings ..."
   },
   "keywords": [],
   "author": "",
