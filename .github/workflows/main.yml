@@ -38,6 +38,6 @@ jobs:
           path: src/
           remote_key: ${{ secrets.EC2_SSH_KEY }}
           remote_host: ec2-13-127-232-26.ap-south-1.compute.amazonaws.com
-          remote_user: ${{ secrets.USERNAME }}
-          remote_path: /var/www/html/
+          remote_user: ec2-user
+          remote_path: /home/ec2-user
           rsh: ls && echo meow && pwd
