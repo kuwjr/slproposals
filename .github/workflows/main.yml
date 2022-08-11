@@ -37,7 +37,7 @@ jobs:
         env:
           path: src/
           remote_key: ${{ secrets.EC2_SSH_KEY }}
-          remote_host: ${{ secrets.HOST_DNS }}
+          remote_host: ip-172-31-38-147.ap-south-1.compute.internal
           remote_user: ${{ secrets.USERNAME }}
           remote_path: /var/www/html/
           rsh: ls && echo meow && pwd
