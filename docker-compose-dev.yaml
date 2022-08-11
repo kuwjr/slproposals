@@ -60,12 +60,7 @@ networks:
 
 volumes:
   backend:
-    driver: local
   mongodb:
-    driver: local
   frontend:
-    driver: local
   db_data:
-    driver: local
   db_config:
-    driver: local

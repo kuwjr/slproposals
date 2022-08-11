@@ -14,7 +14,7 @@ jobs:
         uses: actions/checkout@main
         
       - name: Generate deployment package
-        run: zip -r deploy.zip * -x "**node_modules**"
+        run: zip -r backend.zip backend docker-entrypoint-initdb.d docker-compose.yaml * -x "**node_modules**"
         
       - name: my-test
         run: echo 'Meow' && ls && pwd
@@ -32,13 +32,10 @@ jobs:
           replace-with: '-'
           flags: 'g'
       
-      - name: Deploy to EBS
-        uses: einaregilsson/beanstalk-deploy@v14
-        with:
-          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_key: ${{ secrets.AWS_SECRECT_ACCESS_KEY }}
-          application_name: slproposals
-          environment_name: Slproposals-env
-          version_label: "slproposals-${{ steps.format-time.outputs.replaced }}"
-          region: ap-south-1
-          deployment_package: deploy.zip
+      - name: Deploy backend to EC2
+        uses: burnett01/rsync-deployments@5.1
+        env:
+          remote_key: ${{ secrets.EC2_SSH_KEY }}
+          remote_host: ${{ secrets.HOST_DNS }}
+          remote_user: ${{ secrets.USERNAME }}
+          remote_path: ${{ secrets.TARGET_DIR }}

@@ -11,7 +11,3 @@ COPY . .
 EXPOSE 5000:8000
 
 RUN npm run build
-
-FROM nginx
-
-COPY --from=0 /backend/build /usr/share/nginx/html

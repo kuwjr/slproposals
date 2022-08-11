@@ -4,9 +4,9 @@ services:
     container_name: backend
     build:
       context: ./backend
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     ports:
-      - 5000:8000
+      - 5000:80
     networks:
      - slproposals
     volumes:
@@ -36,36 +36,13 @@ services:
       - './db_config:/data/configdb'
       - './docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro'
 
-  frontend:
-    container_name: frontend
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile.dev
-    ports:
-      - 3000:3000
-    networks:
-      - slproposals
-    volumes:
-      - ./frontend:/frontend
-    depends_on:
-      - backend
-    stdin_open: true
-    environment:
-      - WATCHPACK_POLLING=true
-      - CHOKIDAR_USEPOLLING=true
-
 networks:
   slproposals:
     driver: bridge
 
 volumes:
   backend:
-    driver: local
   mongodb:
-    driver: local
   frontend:
-    driver: local
   db_data:
-    driver: local
   db_config:
-    driver: local

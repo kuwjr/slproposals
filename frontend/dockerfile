@@ -11,7 +11,3 @@ COPY . .
 EXPOSE 3000:3000
 
 RUN npm run build
-
-FROM nginx
-
-COPY --from=0 /frontend/build /usr/share/nginx/html
