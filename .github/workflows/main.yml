@@ -17,7 +17,7 @@ jobs:
         run: zip -r deploy.zip * -x "**node_modules**"
         
       - name: my-test
-        run: echo 'Meow' && echo ls &&  echo pwd
+        run: echo 'Meow' && ls && pwd
         
       - name: Get timestamp
         uses: gerred/actions/current-time@master
