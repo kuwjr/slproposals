@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 5000:8000
 
-RUN npm run build
+RUN npm run start
