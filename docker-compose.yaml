@@ -7,8 +7,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - 5000:8000
-    networks:
-     - slproposals
     volumes:
       - ./backend:/backend
 
