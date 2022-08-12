@@ -13,9 +13,6 @@ services:
       - ./backend:/backend
     depends_on:
       - mongodb
-    environment:
-      - WATCHPACK_POLLING=true
-      - CHOKIDAR_USEPOLLING=true
 
   mongodb:
     image: mongo
@@ -42,7 +39,10 @@ networks:
 
 volumes:
   backend:
-  mongodb:
-  frontend:
+    driver: local
   db_data:
+    driver: local
   db_config:
+    driver: local
+  docker-entrypoint-initdb.d:
+    driver: local
