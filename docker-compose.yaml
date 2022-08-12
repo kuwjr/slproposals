@@ -11,8 +11,6 @@ services:
      - slproposals
     volumes:
       - ./backend:/backend
-    depends_on:
-      - mongodb
 
 volumes:
   backend:
