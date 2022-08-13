@@ -14,7 +14,7 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-const port = 8000
+const port = 80
 
 app.get('/', (req, res) => {
     res.status(200).send('Hellow Meoww!');
