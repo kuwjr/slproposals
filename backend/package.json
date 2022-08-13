@@ -1,0 +1,19 @@
+{
+    "name": "slproposals-backend",
+    "version": "1.0.0",
+    "description": "",
+    "main": "src/server.js",
+    "scripts": {
+      "dev": "nodemon src/server.js --unhandled-rejections=strict --trace-warnings ...",
+      "build": "npm build",
+      "start": "node src/server.js"
+    },
+    "keywords": [],
+    "author": "Shimran Kuwailid",
+    "license": "ISC",
+    "dependencies": {
+      "body-parser": "^1.19.1",
+      "express": "^4.17.2",
+      "nodemon": "^2.0.15"
+    }
+  }
