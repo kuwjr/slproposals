@@ -1,10 +1,7 @@
 version: "3"
 services:
   backend:
-    container_name: backend
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+    build: ./backend
     ports:
       - 80:80
     volumes:
