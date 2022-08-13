@@ -12,20 +12,20 @@ router.get("/", async (req, res) => {
     const fieldsToSelect = req.isAuthenticated() ? "-__v -password" : "-__v -password -email -mobile_number"
     //get all proposals (users) from db
     const allUsers = await User.find({}).select(fieldsToSelect)
-    res.status(200).send(allUsers);
+    return res.status(200).send(allUsers);
   } catch (e) {
-    res.status(400).send({"Error": e.message});
+    return res.status(400).send({"Error": e.message});
   }
 });
 
 //get user with id
 router.get("/:id", async (req, res) => {
     try {
-        const fieldsToSelect = req.isAuthenticated() ? "-__v -password" : "-__v -password -email -mobile_number"
-        const user = await User.find({_id: req.params.id}).select(fieldsToSelect)
-        res.status(200).send(user);
+      const fieldsToSelect = req.isAuthenticated() ? "-__v -password" : "-__v -password -email -mobile_number"
+      const user = await User.find({_id: req.params.id}).select(fieldsToSelect)
+      return res.status(200).send(user);
     } catch (e) {
-        res.status(400).send({"Error": e.message});
+      return res.status(400).send({"Error": e.message});
     }
 })
 
