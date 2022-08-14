@@ -16,7 +16,8 @@ services:
     image: mongo
     restart: unless-stopped
     environment:
-      MONGO_INITDB_DATABASE: slproposals
+      MONGO_INITDB_ROOT_USERNAME: casper
+      MONGO_INITDB_ROOT_PASSWORD: meow
     ports:
       - 27017:27017
     networks:
@@ -24,7 +25,6 @@ services:
     volumes:
       - './db_data:/data/db'
       - './db_config:/data/configdb'
-      - './docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro'
 
 volumes:
   backend:
