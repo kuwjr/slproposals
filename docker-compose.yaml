@@ -14,10 +14,10 @@ services:
 
   mongodb:
     image: mongo
-    restart: always
+    restart: unless-stopped
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: root_password
+      MONGO_INITDB_ROOT_USERNAME: casper
+      MONGO_INITDB_ROOT_PASSWORD: meow
       MONGO_INITDB_DB: slproposals
     ports:
       - 27017:27017
@@ -30,6 +30,12 @@ services:
 
 volumes:
   backend:
+    driver: local
+  db_data:
+    driver: local
+  db_config:
+    driver: local
+  docker-entrypoint-initdb.d:
     driver: local
 
 networks:
