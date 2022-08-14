@@ -1,12 +1,12 @@
-// db.createUser(
-//     {
-//         user: "casper",
-//         pwd: "meow",
-//         roles: [
-//             {
-//                 role: "root",
-//                 db: "slproposals"
-//             }
-//         ]
-//     }
-// );
+db.createUser(
+    {
+        user: "casper",
+        pwd: "meow",
+        roles: [
+            {
+                role: "root",
+                // db: "slproposals"
+            }
+        ]
+    }
+);
