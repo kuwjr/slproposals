@@ -15,6 +15,8 @@ services:
   mongodb:
     image: mongo
     restart: unless-stopped
+    environment:
+      MONGO_INITDB_DATABASE: slproposals
     ports:
       - 27017:27017
     networks:
