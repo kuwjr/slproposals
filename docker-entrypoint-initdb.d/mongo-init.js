@@ -4,7 +4,7 @@ db.createUser(
         pwd: "meow",
         roles: [
             {
-                role: "readWrite",
+                role: "userAdminAnyDatabase",
                 db: "slproposals"
             }
         ]
