@@ -15,10 +15,6 @@ services:
   mongodb:
     image: mongo
     restart: unless-stopped
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: casper
-      MONGO_INITDB_ROOT_PASSWORD: meow
-      MONGO_INITDB_DATABASE: slproposals
     ports:
       - 27017:27017
     networks:
