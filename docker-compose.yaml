@@ -6,7 +6,7 @@ services:
     ports:
       - 5000:5000
     volumes:
-      - ./backend:/backend
+      - ./backend:/backend_code
     networks:
       - slproposals_docker_network
     depends_on:
@@ -31,7 +31,7 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ./frontend:/frontend
+      - ./frontend:/frontend_code
     networks:
       - slproposals_docker_network
     depends_on:
