@@ -7,7 +7,31 @@ services:
       - 80:5000
     volumes:
       - ./backend:/backend
+    networks:
+      - slproposals_docker_network
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: casper
+      MONGO_INITDB_ROOT_PASSWORD: meow
+      MONGO_INITDB_DB: slproposals
+    ports:
+      - 27017:27017
+    networks:
+      - slproposals_docker_network
+    volumes:
+      - './db_data:/data/db'
+      - './db_config:/data/configdb'
+      - './docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro'
 
 volumes:
   backend:
     driver: local
+
+networks:
+  slproposals_docker_network:
+    driver: bridge

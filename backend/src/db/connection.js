@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 try {
   module.exports = mongoose.connect(
-    `mongodb+srv://casper:meow@slproposals-db-cluster.qm8g99r.mongodb.net/?retryWrites=true&w=majority`,
+    `mongodb://casper:meow@mongodb:27017/slproposals`,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
