@@ -4,7 +4,7 @@ services:
     build:
       context: ./backend
     ports:
-      - 80:5000
+      - 5000:5000
     volumes:
       - ./backend:/backend
     networks:
@@ -24,16 +24,25 @@ services:
       - slproposals_docker_network
     volumes:
       - './db_data:/data/db'
-      - './db_config:/data/configdb'
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/frontend
+    networks:
+      - slproposals_docker_network
+    depends_on:
+      - backend
 
 volumes:
   backend:
     driver: local
   db_data:
     driver: local
-  db_config:
-    driver: local
-  docker-entrypoint-initdb.d:
+  frontend:
     driver: local
 
 networks:
