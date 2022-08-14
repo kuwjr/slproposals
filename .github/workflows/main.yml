@@ -14,10 +14,7 @@ jobs:
         uses: actions/checkout@main
         
       - name: Generate deployment package
-        run: zip -r backend.zip backend docker-entrypoint-initdb.d docker-compose.yaml -x "**node_modules**"
-        
-      - name: my-test
-        run: echo 'Meow' && ls && pwd
+        run: zip -r * -x "**node_modules**"
         
       - name: Get timestamp
         uses: gerred/actions/current-time@master
