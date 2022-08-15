@@ -1,8 +1,7 @@
 FROM node:alpine
-WORKDIR /backend_code
+WORKDIR /
 COPY package.json .
 RUN npm install
 COPY . .
 EXPOSE 5000
-COPY . .
 CMD ["npm", "run", "start"]
