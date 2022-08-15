@@ -11,7 +11,7 @@ jobs:
         uses: actions/checkout@main
         
       - name: Generate deployment package
-        run: zip -r *
+        run: zip slproposal.zip -r -m *
         
       - name: Get timestamp
         uses: gerred/actions/current-time@master
@@ -32,5 +32,5 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
           REMOTE_HOST: ec2-3-110-177-25.ap-south-1.compute.amazonaws.com
           REMOTE_USER: ec2-user
-          SOURCE: /slproposals.zip
+          SOURCE: /slproposal.zip
           TARGET: /home/ec2-user
