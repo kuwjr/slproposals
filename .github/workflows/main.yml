@@ -37,3 +37,4 @@ jobs:
           REMOTE_USER: ec2-user
           SOURCE: /slproposals.zip
           TARGET: /home/ec2-user
+          
