@@ -14,7 +14,7 @@ jobs:
         uses: actions/checkout@main
         
       - name: Generate deployment package
-        run: zip -r * -x "**node_modules**"
+        run: zip -r *
         
       - name: Get timestamp
         uses: gerred/actions/current-time@master
@@ -37,4 +37,3 @@ jobs:
           REMOTE_USER: ec2-user
           SOURCE: /slproposals.zip
           TARGET: /home/ec2-user
-          
