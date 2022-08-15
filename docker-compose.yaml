@@ -9,21 +9,6 @@ services:
       - ./backend:/backend_code
     networks:
       - slproposals_docker_network
-    depends_on:
-      - mongodb
-
-  mongodb:
-    image: mongo
-    restart: unless-stopped
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: casper
-      MONGO_INITDB_ROOT_PASSWORD: meow
-    ports:
-      - 27017:27017
-    networks:
-      - slproposals_docker_network
-    volumes:
-      - './db_data:/data/db'
 
   frontend:
     build:
@@ -39,8 +24,6 @@ services:
 
 volumes:
   backend:
-    driver: local
-  db_data:
     driver: local
   frontend:
     driver: local
