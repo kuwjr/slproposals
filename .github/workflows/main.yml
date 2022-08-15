@@ -1,6 +1,3 @@
-# host frontend on AWS Amplify
-# host backend and db on ec2
-
 name: Deployment from Github to AWS
 on:
   push:
