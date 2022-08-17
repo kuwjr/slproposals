@@ -1,12 +1,12 @@
 version: "3"
 services:
   backend:
+    volumes:
+      - ./backend/src:/code/src
     build:
       context: ./backend
     ports:
       - 5000:5000
-    volumes:
-      - ./backend:/backend_code
     networks:
       - slproposals_docker_network
 
@@ -16,18 +16,17 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ./frontend:/frontend_code
+      - ./frontend/src:/code/src
     networks:
       - slproposals_docker_network
     depends_on:
       - backend
+    environment:
+      - WATCHPACK_POLLING=true
 
 volumes:
   backend:
-    driver: local
   frontend:
-    driver: local
 
 networks:
   slproposals_docker_network:
-    driver: bridge
