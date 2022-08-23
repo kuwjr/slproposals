@@ -8,7 +8,7 @@ const bodyParser = require("body-parser");
 const cors = require('cors');
 
 app.use(cors({
-    origin: 'http://localhost:3000', // todo: change to env variable
+    origin: 'http://localhost', // todo: change to env variable
     credentials: true,
     methods: ['GET','POST','HEAD','PUT','PATCH','DELETE'],
     // allowedHeaders: ['Content-Type'],

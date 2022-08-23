@@ -2,6 +2,8 @@ FROM node:alpine
 WORKDIR /code
 COPY package.json .
 RUN npm install
-EXPOSE 3000
 COPY . .
-CMD ["npm", "run", "start"]
+RUN npm run build
+
+FROM nginx
+COPY --from=0 /code/build /usr/share/nginx/html
