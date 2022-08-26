@@ -9,9 +9,11 @@ jobs:
     steps:
       - name: Checkout latest repo
         uses: actions/checkout@main
-        
-      - name: Generate FRONTEND deployment package
+
+      - name: Go into frontend dir
         run: cd frontend
+
+      - name: Generate FRONTEND deployment package
         run: zip slproposals-frontend.zip -r -m *
 
       - name: Generate BACKEND deployment package
