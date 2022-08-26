@@ -10,11 +10,8 @@ jobs:
       - name: Checkout latest repo
         uses: actions/checkout@main
 
-      - name: Go into frontend dir
-        run: cd frontend
-
       - name: Generate FRONTEND deployment package
-        run: zip slproposals-frontend.zip -r -m *
+        run: zip slproposals-frontend.zip -r -m -j *
 
       - name: Generate BACKEND deployment package
         run: zip slproposals-backend.zip -r -m backend
@@ -38,7 +35,7 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
           REMOTE_HOST: ec2-13-235-69-76.ap-south-1.compute.amazonaws.com
           REMOTE_USER: ec2-user
-          SOURCE: /frontend/slproposals-frontend.zip
+          SOURCE: slproposals-frontend.zip
           TARGET: /home/ec2-user
 
       - name: Deploy slproposals-backend to EC2 
