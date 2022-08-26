@@ -33,7 +33,7 @@ app.use(cookieParser('cats')) // todo: change to env variable
 app.use(passport.initialize());
 app.use(passport.session());
 
-const port = 5000
+const port = 80
 
 //import routes
 const userRoutes = require("./routes/user-routes")
