@@ -11,7 +11,7 @@ jobs:
         uses: actions/checkout@main
         
       - name: Generate FRONTEND deployment package
-        run: zip slproposals-frontend.zip -r -m frontend/
+        run: zip slproposals-frontend.zip -r -m frontend/*
 
       - name: Generate BACKEND deployment package
         run: zip slproposals-backend.zip -r -m backend
