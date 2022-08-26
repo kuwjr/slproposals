@@ -43,6 +43,11 @@ const proposalRoutes = require("./routes/proposal-routes")
 app.use("/users", userRoutes)
 app.use("/proposals", proposalRoutes)
 
+// home page
+app.get('/', (req, res) => {
+    return res.status(200).send('Welcome to SL Proposals API service :)');
+})
+
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
 })
